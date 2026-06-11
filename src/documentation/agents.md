@@ -141,6 +141,13 @@ Deep-reads a document and returns only the most relevant, actionable content. Fi
    OR @backlog-updater     (if backlog.md exists)
   └── @memory-updater      (auto — decisions + terms)
 
+/iterate_spec
+  └── @thoughts-locator    (find spec file)
+  └── @thoughts-analyzer   (read full spec) — parallel with:
+  └── @thoughts-locator    (check backlog row + plan status)
+  └── @memory-updater      (auto — scope cuts + new constraints)
+  └── @backlog-updater     (only if status changed)
+
 /update_backlog
   └── @thoughts-locator    (find backlog.md)
   └── @thoughts-analyzer   (read backlog.md in full)
