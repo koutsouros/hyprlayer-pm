@@ -14,7 +14,7 @@ Single source of truth for all feature specs and their status. Updated automatic
 
 | Status | Feature | Spec | Eng Plan | Created | Notes |
 |--------|---------|------|----------|---------|-------|
-| | | | | | |
+|        |         |      |          |         |       |
 
 <!--
 Status values:
