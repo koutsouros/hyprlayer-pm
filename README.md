@@ -54,7 +54,7 @@ From Step 4 onward, the loop runs per feature until the product ships.
 | `/review_metrics` | *(planned)* Post-launch metrics review tied to a spec's success criteria |
 | `/stakeholder_update` | *(planned)* Generate a status update for leadership or engineering |
 
-For command details and usage examples, see [`documentation/`](documentation/).
+For command details and usage examples, see [`ai/documentation/`](ai/documentation/).
 
 ---
 
@@ -85,7 +85,7 @@ All six run in parallel. Each writes its findings to a dedicated file before the
 | `@thoughts-locator` | All commands | *(Hyprlayer built-in)* Scans `thoughts/searchable/` for relevant files |
 | `@thoughts-analyzer` | All commands | *(Hyprlayer built-in)* Deep-reads documents; extracts decisions, constraints, and actionable content |
 
-See [`documentation/agents.md`](documentation/agents.md) for the full agent interaction map.
+See [`ai/documentation/agents.md`](ai/documentation/agents.md) for the full agent interaction map.
 
 ---
 
@@ -109,7 +109,7 @@ Most memory updates happen automatically during the normal workflow:
 
 If `memory/` doesn't exist, automatic steps skip silently. Run `/update_memory` → Initialize to set it up.
 
-See [`documentation/memory-system.md`](documentation/memory-system.md) for a full explanation.
+See [`ai/documentation/memory-system.md`](ai/documentation/memory-system.md) for a full explanation.
 
 ---
 
@@ -128,7 +128,7 @@ Engineering Plan                thoughts/repos/{project}/shared/plans/
 
 Each level inherits from the level above. A spec references personas from the PRD — it does not redefine them. An engineering plan uses the spec's acceptance criteria as planning constraints — it does not re-state them.
 
-See [`documentation/artifact-hierarchy.md`](documentation/artifact-hierarchy.md) for when to use each artifact.
+See [`ai/documentation/artifact-hierarchy.md`](ai/documentation/artifact-hierarchy.md) for when to use each artifact.
 
 ---
 
