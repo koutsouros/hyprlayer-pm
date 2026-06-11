@@ -50,7 +50,7 @@ From Step 4 onward, the loop runs per feature until the product ships.
 | `/update_backlog` | Sync the spec registry, update statuses, and manage parking lot ideas |
 | `/iterate_spec` | Revise an existing spec in place; flags if a plan exists and may go stale |
 | `/update_memory` | Log decisions, update product context, add terminology, or run a memory health check |
-| `/sprint_plan` | *(planned)* Scope a sprint from the backlog against team capacity |
+| `/plan_sprint` | *(planned)* Scope a sprint from the backlog against team capacity |
 | `/review_metrics` | *(planned)* Post-launch metrics review tied to a spec's success criteria |
 | `/stakeholder_update` | *(planned)* Generate a status update for leadership or engineering |
 

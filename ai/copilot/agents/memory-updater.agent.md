@@ -269,7 +269,7 @@ last_updated_by: memory-updater
 Living briefing document — what is true right now. History of how we got here lives in `decisions.md`. Terminology lives in `taxonomy.md`. Update at the start of each sprint or when the team's focus shifts materially. Each section is overwritten in place — this is not an append-only file.
 
 ## Current Sprint
-[TBD: update via /update_memory or /sprint_plan]
+[TBD: update via /update_memory or /plan_sprint]
 
 ## Active Constraints
 [TBD: populate from PRD constraints and engineering blockers]
