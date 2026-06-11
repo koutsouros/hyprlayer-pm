@@ -17,9 +17,89 @@ Agents are called by prompt files (commands), not directly by users. If you need
 
 ---
 
+## Researcher Agents
+
+Six specialist research agents are called by `research_opportunity`. They always run in parallel and write their findings to individual files before the synthesizing prompt combines them into the Opportunity Assessment.
+
+All researcher agents share the same operating principles: no fabricated data, all data points confidence-labeled (`[HIGH]`, `[MEDIUM]`, `[LOW]`), all assumptions flagged with `[ASSUMPTION]`, all unknowns flagged with `[UNKNOWN]`, all sources cited with URLs.
+
+---
+
+### `@market-researcher`
+
+**File:** `ai/copilot/agents/market-researcher.agent.md`  
+**Called by:** `research_opportunity` (task 1 — Market Research)  
+**Storage support:** web, search
+
+Sizes the market and maps industry dynamics. Produces TAM/SAM/SOM estimates with sources, CAGR and growth trajectory, key trend analysis with timing signals (why now, window assessment), and adjacent market mapping. Cross-references market size estimates across at least two independent sources and notes any discrepancies.
+
+**Output file:** `thoughts/shared/research/YYYY-MM-DD-market-researcher-{slug}.md`
+
+---
+
+### `@competitor-researcher`
+
+**File:** `ai/copilot/agents/competitor-researcher.agent.md`  
+**Called by:** `research_opportunity` (task 2 — Competitive Analysis)  
+**Storage support:** web, search
+
+Maps the competitive landscape. Produces profiles for direct competitors, indirect competitors, and substitutes; a feature comparison matrix (Has / Partial / Missing / Unknown); a positioning map; and white space analysis. Sources features from competitor websites, changelogs, G2/Capterra reviews, and Crunchbase.
+
+**Output file:** `thoughts/shared/research/YYYY-MM-DD-competitor-researcher-{slug}.md`
+
+---
+
+### `@customer-researcher`
+
+**File:** `ai/copilot/agents/customer-researcher.agent.md`  
+**Called by:** `research_opportunity` (task 3 — Customer Needs)  
+**Storage support:** web, search
+
+Researches customer pain points, unmet needs, and demand signals. Documents how target users currently behave, what workarounds they use, and what segment-level needs exist. Does not invent user data — sources from reviews, forums, surveys, and public research.
+
+**Output file:** `thoughts/shared/research/YYYY-MM-DD-customer-researcher-{slug}.md`
+
+---
+
+### `@business-researcher`
+
+**File:** `ai/copilot/agents/business-researcher.agent.md`  
+**Called by:** `research_opportunity` (task 4 — Business Viability)  
+**Storage support:** web, search
+
+Assesses business viability and strategic fit. Analyzes revenue model options, cost structure, ROI signals, and strategic alignment. Does not produce financial projections — documents what revenue models exist in comparable products and what cost structures look like.
+
+**Output file:** `thoughts/shared/research/YYYY-MM-DD-business-researcher-{slug}.md`
+
+---
+
+### `@technical-researcher`
+
+**File:** `ai/copilot/agents/technical-researcher.agent.md`  
+**Called by:** `research_opportunity` (task 5 — Technical Landscape)  
+**Storage support:** web, search
+
+Maps the technology landscape. Produces build-vs-buy analysis, technology trend and maturity assessment, API and platform ecosystem mapping, and open-source option evaluation. Frames findings around technical feasibility signals relevant to the initiative.
+
+**Output file:** `thoughts/shared/research/YYYY-MM-DD-technical-researcher-{slug}.md`
+
+---
+
+### `@risk-researcher`
+
+**File:** `ai/copilot/agents/risk-researcher.agent.md`  
+**Called by:** `research_opportunity` (task 6 — Risk Analysis)  
+**Storage support:** web, search
+
+Identifies and assesses risks across five dimensions: market, technical, organizational, regulatory, and financial. For each risk: likelihood, severity, and suggested mitigation direction. Does not prioritize what to build — documents risk as it exists so the PM can weigh it.
+
+**Output file:** `thoughts/shared/research/YYYY-MM-DD-risk-researcher-{slug}.md`
+
+---
+
 ## `@backlog-creator`
 
-**File:** `src/copilot/agents/backlog-creator.agent.md`  
+**File:** `ai/copilot/agents/backlog-creator.agent.md`  
 **Called by:** `/create_spec` (when no backlog exists), `/update_backlog`  
 **Storage support:** git, Obsidian
 
@@ -37,7 +117,7 @@ Creates `backlog.md` from scratch for a product. Scans `thoughts/searchable/shar
 
 ## `@backlog-updater`
 
-**File:** `src/copilot/agents/backlog-updater.agent.md`  
+**File:** `ai/copilot/agents/backlog-updater.agent.md`  
 **Called by:** `/create_spec`, `/update_backlog`  
 **Storage support:** git, Obsidian
 
@@ -66,7 +146,7 @@ Applies surgical, typed updates to an existing `backlog.md`. Reads the full file
 
 ## `@memory-updater`
 
-**File:** `src/copilot/agents/memory-updater.agent.md`  
+**File:** `ai/copilot/agents/memory-updater.agent.md`  
 **Called by:** `/create_spec` (automatic), `/update_backlog` Done transitions (automatic), `/update_memory`  
 **Storage support:** git, Obsidian
 
@@ -133,6 +213,24 @@ Deep-reads a document and returns only the most relevant, actionable content. Fi
 ## Agent interaction map
 
 ```
+research_opportunity
+  └── @thoughts-locator    (discover existing research in thoughts/)
+  └── [selected agents — all run IN PARALLEL]:
+        @market-researcher      (if task 1 selected)
+        @competitor-researcher  (if task 2 selected)
+        @customer-researcher    (if task 3 selected)
+        @business-researcher    (if task 4 selected)
+        @technical-researcher   (if task 5 selected)
+        @risk-researcher        (if task 6 selected)
+  └── [synthesis — after all parallel agents complete]
+        writes: thoughts/shared/research/YYYY-MM-DD-opportunity-{slug}.md
+
+research_requirements
+  └── [reads OA if provided — no agent call needed]
+  └── [web research inline — research checklist]
+  └── [drafts PRD directly — no agent delegation]
+        writes: thoughts/shared/requirements/YYYY-MM-DD-prd-{slug}.md
+
 /create_spec
   └── @thoughts-locator    (discover relevant files)
   └── @thoughts-analyzer × up to 3 parallel

@@ -70,7 +70,11 @@ From the spec file, the feature name comes from — in priority order:
 
 ### Step 4: Write backlog.md
 
-Write the complete file to `thoughts/shared/backlog/backlog.md` using the template below. Populate the Spec Registry table with all specs found. If no specs were found, leave the table with one empty placeholder row and add a comment.
+Write the complete file to `thoughts/shared/backlog/backlog.md`.
+
+**Template source:** Read `thoughts/global/shared/backlog-template.md` and use it as the structure. If that file does not exist, fall back to the embedded template below.
+
+Populate the Spec Registry table with all specs found. If no specs were found, leave the table with one empty placeholder row and add a comment.
 
 ---
 

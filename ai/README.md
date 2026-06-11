@@ -62,6 +62,21 @@ For command details and usage examples, see [`documentation/`](documentation/).
 
 PM commands delegate all file writes to agents. No command writes directly to thoughts.
 
+### Researcher agents (called by `research_opportunity`)
+
+All six run in parallel. Each writes its findings to a dedicated file before the synthesizing prompt combines them into the Opportunity Assessment.
+
+| Agent | Research area |
+|-------|--------------|
+| `@market-researcher` | Market sizing (TAM/SAM/SOM), industry trends, timing signals, adjacent markets |
+| `@competitor-researcher` | Competitive landscape, feature comparison matrices, positioning, white space |
+| `@customer-researcher` | Pain points, unmet needs, demand signals, segment-level needs |
+| `@business-researcher` | Revenue models, cost structure, strategic fit, ROI signals |
+| `@technical-researcher` | Technology trends, platform capabilities, build vs. buy analysis |
+| `@risk-researcher` | Market, technical, organizational, regulatory, and financial risks |
+
+### PM workflow agents
+
 | Agent | Called by | What it does |
 |-------|-----------|-------------|
 | `@backlog-creator` | `/create_spec`, `/update_backlog` | Creates `backlog.md` from scratch by scanning existing specs |
@@ -147,6 +162,6 @@ From this point forward, the workflow is spec → backlog → plan → ship → 
 
 ## Supported AI Tools
 
-- **GitHub Copilot** — Commands and agents live under `src/copilot/prompts/` and `src/copilot/agents/`
-- **OpenCode** — *(planned)* `src/opencode/`
-- **Claude** — *(planned)* `src/claude/`
+- **GitHub Copilot** — Commands and agents live under `ai/copilot/prompts/` and `ai/copilot/agents/`
+- **OpenCode** — *(planned)* `ai/opencode/`
+- **Claude** — *(planned)* `ai/claude/`
