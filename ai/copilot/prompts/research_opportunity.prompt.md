@@ -137,13 +137,18 @@ Then wait for the user's research query.
    - Add YAML frontmatter before the template structure:
      ```yaml
      ---
-     date: [Current date and time with timezone in ISO format]
-     researcher: [Researcher name from thoughts status]
-     topic: "[User's Question/Topic]"
-     tags: [research, market-opportunity]
-     status: complete
-     last_updated: [Current date in YYYY-MM-DD format]
-     last_updated_by: [Researcher name]
+     title: "OA: [User's Question/Topic — short slug]"
+     type: research
+     date: [YYYY-MM-DD]
+     status: draft
+     ticket: ""
+     project: "[product slug from thoughts status]"
+     scope: shared
+     tags: [research, opportunity-assessment, <topic-tag>]
+     author: "[Researcher name from thoughts status]"
+     related: []
+     last_updated: [YYYY-MM-DD]
+     last_updated_by: "[Researcher name]"
      ---
      ```
    - Populate template sections with synthesized findings:

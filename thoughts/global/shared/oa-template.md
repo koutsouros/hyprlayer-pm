@@ -1,3 +1,18 @@
+---
+title: "OA: {{topic}}"
+type: research
+date: {{YYYY-MM-DD}}
+status: draft
+ticket: ""
+project: "{{product-slug}}"
+scope: shared
+tags: [research, opportunity-assessment]
+author: "{{PM_Name}}"
+related: []
+last_updated: {{YYYY-MM-DD}}
+last_updated_by: "{{PM_Name}}"
+---
+
 # OA: {{Title}}
 
 **Date:** {{YYYY-MM-DD}}

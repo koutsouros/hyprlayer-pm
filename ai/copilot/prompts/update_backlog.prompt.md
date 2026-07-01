@@ -196,6 +196,8 @@ If the user asks to see the full backlog content, read `thoughts/shared/backlog/
 
 **Path handling:** Strip `searchable/` from all paths sourced from the searchable index. Preserve all other subdirectory structure. Never use absolute filesystem paths in displayed output or written files.
 
+**Metadata schema:** backlog.md frontmatter uses the unified 10-field schema (title, type, date, status, ticket, project, scope, tags, author, related). When @backlog-creator writes a new backlog.md, it must populate all required fields from `thoughts/global/shared/backlog-template.md`. @backlog-updater must update `last_updated` and `last_updated_by` on every write.
+
 **Backlog is per product:** If the user has multiple products, confirm which product's backlog to update before doing anything. Look for disambiguation in the thoughts status or ask directly.
 
 **Status is owned by the workflow, not the sync:** FULL_SYNC never changes the status of existing rows — it only adds missing rows and flags orphaned ones. Status changes require explicit user intent.

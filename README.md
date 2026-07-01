@@ -19,11 +19,15 @@ Research → Plan → Implement → Validate → Commit → Review → Ship
 Hyprlayer-PM adds the upstream work that makes planning possible:
 
 ```
-Opportunity → PRD → Spec  →  ✋ handoff  →  Plan → Implement → ...
-└── PM layer (this repo) ──┘              └── Hyprlayer engineering ──┘
+Opportunity → PRD → Spec  ──────────────────────────────  ✋ handoff  →  Plan → Implement → ...
+└── PM layer (this repo) ─┘                               └── Hyprlayer engineering ──────────┘
+                               ↕ (parallel, spec-driven)
+                          Prototype → Iterate → Export
 ```
 
 The handoff point is the spec. Everything before it is PM work. Everything from `/create_plan` onward is Hyprlayer engineering. The spec's acceptance criteria become the engineering plan's success criteria — the contract between them.
+
+Prototyping runs in parallel with the spec phase. A prototype is grounded in the same PM artifacts (spec, PRD, OA) and its design decisions feed back into memory alongside spec decisions.
 
 ---
 
@@ -32,11 +36,12 @@ The handoff point is the spec. Everything before it is PM work. Everything from 
 1. **Discover** (`research_opportunity`) — Synthesize market signals, competitive landscape, and customer evidence into an Opportunity Assessment
 2. **Define** (`research_requirements`) — Translate the opportunity into a full PRD: personas, phased roadmap, functional requirements, success metrics
 3. **Spec** (`/create_spec`) — Scope a single feature into a testable, engineering-ready spec with explicit AC and out-of-scope decisions
-4. **Maintain** (`/update_backlog`) — Track all specs through the registry from Todo → In Progress → Done; manage pre-spec ideas in the parking lot
-5. **Iterate** (`/iterate_spec`) — Revise a spec when engineering raises a concern or scope changes; updates in place and logs the reason
-6. **Capture** (`/update_memory`) — Log decisions, refresh product context, define terminology — or let routine commands handle it automatically
+4. **Prototype** (`create_prototype` → `iterate_prototype`) — Build a high-fidelity prototype grounded in the spec; runs in parallel with spec refinement, not sequentially after it
+5. **Maintain** (`/update_backlog`) — Track all specs through the registry from Todo → In Progress → Done; manage pre-spec ideas in the parking lot
+6. **Iterate** (`/iterate_spec`) — Revise a spec when engineering raises a concern or scope changes; updates in place and logs the reason
+7. **Capture** (`/update_memory`) — Log decisions, refresh product context, define terminology — or let routine commands handle it automatically
 
-From Step 4 onward, the loop runs per feature until the product ships.
+From Step 5 onward, the loop runs per feature until the product ships. Prototyping is optional but recommended before engineering handoff for complex UI flows.
 
 ---
 
@@ -44,8 +49,8 @@ From Step 4 onward, the loop runs per feature until the product ships.
 
 | Command | Description |
 |---------|-------------|
-| `research_opportunity` | Produce an Opportunity Assessment from parallel market, competitive, and customer research |
-| `research_requirements` | Produce a PRD covering personas, roadmap phases, functional requirements, and success metrics |
+| `/research_opportunity` | Produce an Opportunity Assessment from parallel market, competitive, and customer research |
+| `/research_requirements` | Produce a PRD covering personas, roadmap phases, functional requirements, and success metrics |
 | `/create_spec` | Write a feature-scoped spec that engineering can act on immediately — confirms draft before writing |
 | `/update_backlog` | Sync the spec registry, update statuses, and manage parking lot ideas |
 | `/iterate_spec` | Revise an existing spec in place; flags if a plan exists and may go stale |
@@ -53,6 +58,10 @@ From Step 4 onward, the loop runs per feature until the product ships.
 | `/plan_sprint` | *(planned)* Scope a sprint from the backlog against team capacity |
 | `/review_metrics` | *(planned)* Post-launch metrics review tied to a spec's success criteria |
 | `/stakeholder_update` | *(planned)* Generate a status update for leadership or engineering |
+| `create_prototype` | Create a new Vite + React prototype from PM artifacts — bootstraps the product-line repo automatically on first use |
+| `/iterate_prototype` | Add new screens, extend existing ones, or do both — reads existing prototype state and classifies each change automatically |
+| `/handoff_prototype` | Capture prototype design decisions to memory; mark prototype ready for engineering |
+| `/export_prototype` | Build a static HTML export package and generate an annotated `HANDOFF.md` for engineering |
 
 For command details and usage examples, see [`documentation/`](documentation/).
 
@@ -82,6 +91,7 @@ All six run in parallel. Each writes its findings to a dedicated file before the
 | `@backlog-creator` | `/create_spec`, `/update_backlog` | Creates `backlog.md` from scratch by scanning existing specs |
 | `@backlog-updater` | `/create_spec`, `/update_backlog`, `/iterate_spec` | Applies surgical typed updates to an existing `backlog.md` |
 | `@memory-updater` | `/create_spec` (auto), `/update_backlog` (auto), `/update_memory` | Maintains the three memory files; initializes gracefully if they don't exist |
+| `@prototype-builder` | `create_prototype`, `iterate_prototype`, `handoff_prototype`, `export_prototype` | Scaffolds and maintains prototype projects across per-product-line repos (`hyprlayer-prototypes-{slug}`) |
 | `@thoughts-locator` | All commands | *(Hyprlayer built-in)* Scans `thoughts/searchable/` for relevant files |
 | `@thoughts-analyzer` | All commands | *(Hyprlayer built-in)* Deep-reads documents; extracts decisions, constraints, and actionable content |
 
@@ -158,10 +168,16 @@ To initialize Hyprlayer-PM for a new product:
 
 From this point forward, the workflow is spec → backlog → plan → ship → memory, repeating per feature.
 
+**Prototyping requires no additional setup.** When you're ready to prototype a feature, run `create_prototype` — it handles everything: resolving or creating the product-line repo, scaffolding the prototype, and wiring it to your PM artifacts. The first time you prototype a product, it will ask for a local path and walk you through pushing to GitHub. After that, subsequent prototypes for the same product go straight to scaffolding.
+
 ---
 
 ## Supported AI Tools
 
-- **GitHub Copilot** — Commands and agents live under `ai/copilot/prompts/` and `ai/copilot/agents/`
-- **OpenCode** — *(planned)* `ai/opencode/`
-- **Claude** — *(planned)* `ai/claude/`
+| Tool | Commands | Agents | Project context |
+|------|----------|--------|-----------------|
+| **GitHub Copilot** | `ai/copilot/prompts/*.prompt.md` | `ai/copilot/agents/*.agent.md` | — |
+| **OpenCode** | `ai/opencode/commands/*.md` | `ai/opencode/agents/*.md` | `AGENTS.md` |
+| **Claude Code** | `ai/claude/commands/*.md` | `ai/claude/agents/*.md` | `CLAUDE.md` |
+
+All three tool folders contain equivalent skills and agents. Copilot uses `@agent-name` syntax for subagent invocation; OpenCode uses the same `@agent-name` syntax; Claude Code references agents by name in bold (`**agent-name**`) and routes automatically based on agent descriptions.

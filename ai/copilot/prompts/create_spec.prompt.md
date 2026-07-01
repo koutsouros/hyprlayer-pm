@@ -129,14 +129,20 @@ Fill in every placeholder. Remove placeholder syntax in the final output.
 
 ```markdown
 ---
+title: "Spec: {{Feature Name}}"
+type: plan
 date: {{YYYY-MM-DD}}
-product: {{product name}}
-prd: {{path to PRD in thoughts, or "none"}}
 status: draft
+ticket: ""
+project: "{{product-slug}}"
+scope: shared
+tags: [spec]
+author: "{{author name from thoughts status}}"
+related: []
+prd: "{{path to PRD in thoughts, or none}}"
 prd_aligned: {{true | false}}
-source: {{parking lot section and entry if promoted from backlog, or "none"}}
+source: "{{parking lot section and entry if promoted from backlog, or none}}"
 version: v0.1
-author: {{author name from thoughts status}}
 ---
 
 # Spec: {{Feature Name}}

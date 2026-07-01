@@ -1,7 +1,16 @@
 ---
-product: {{product name}}
+title: "Backlog: {{Product Name}}"
+type: note
+date: {{YYYY-MM-DD}}
+status: active
+ticket: ""
+project: "{{product-slug}}"
+scope: shared
+tags: [backlog]
+author: "{{author}}"
+related: []
 last_updated: {{YYYY-MM-DD}}
-last_updated_by: {{author}}
+last_updated_by: "{{author}}"
 ---
 
 # Backlog: {{Product Name}}

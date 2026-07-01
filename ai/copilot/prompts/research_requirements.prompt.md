@@ -97,6 +97,20 @@ Fill in every `{{placeholder}}` and `{placeholder}` below. Remove placeholder sy
 ---
 
 ```markdown
+---
+title: "PRD: {{Title}}"
+type: research
+date: {{YYYY-MM-DD}}
+status: draft
+ticket: ""
+project: "{{product-slug}}"
+scope: shared
+tags: [requirements, prd]
+author: "{{PM_Name}}"
+related: []
+version: v0.1
+---
+
 # PRD: {{Title}}
 
 **Date:** {{YYYY-MM-DD}}

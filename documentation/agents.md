@@ -1,6 +1,6 @@
 # Agents Reference
 
-The PM layer uses five agents — three built specifically for PM work, two inherited from HyprLayer. This document explains what each agent does, when it's called, and how to work with it.
+The PM layer uses nine agents — seven built specifically for PM and prototype work, two inherited from Hyprlayer. This document explains what each agent does, when it's called, and how to work with it.
 
 ---
 
@@ -94,6 +94,37 @@ Maps the technology landscape. Produces build-vs-buy analysis, technology trend 
 Identifies and assesses risks across five dimensions: market, technical, organizational, regulatory, and financial. For each risk: likelihood, severity, and suggested mitigation direction. Does not prioritize what to build — documents risk as it exists so the PM can weigh it.
 
 **Output file:** `thoughts/shared/research/YYYY-MM-DD-risk-researcher-{slug}.md`
+
+---
+
+## `@prototype-builder`
+
+**File:** `ai/copilot/agents/prototype-builder.agent.md`  
+**Called by:** `create_prototype`, `iterate_prototype`, `handoff_prototype`, `export_prototype`  
+**Storage support:** filesystem (hyprlayer-prototypes monorepo)
+
+Handles all file writes to the hyprlayer-prototypes monorepo. Never invoked directly by users. Reads `prototype-config.md` before every operation to resolve the repo path and enforce guardrails.
+
+**Operations:**
+
+| Operation | What it does |
+|-----------|-------------|
+| `INIT_PRODUCT_LINE` | Bootstraps a new product-line repo from scratch — directory structure, all `_template/` files, `git init`, initial commit, optional remote add |
+| `SCAFFOLD` | Copies `_template/` to a new prototype path inside a product-line repo, stubs screens, writes `PROTOTYPE.md` |
+| `ADD_SCREEN` | Creates a screen component with real interactions, generates typed JSON mock data, updates routing and manifest |
+| `UPDATE_SCREEN` | Surgically modifies an existing screen — adds sections, wires interactions, extends data — without rewriting the full file |
+| `UPDATE_MANIFEST` | Applies targeted updates to `PROTOTYPE.md` — status, decisions, screen rows, frontmatter |
+| `BUILD_HANDOFF` | Runs `pnpm build`, verifies output, writes `HANDOFF.md`, marks prototype `ready-for-handoff` |
+
+**Key behaviors:**
+- Never writes to `_template/` — scaffold source is read-only
+- Reads any file before modifying it
+- Generates realistic mock data only — no `"string"`, `123`, or Lorem Ipsum placeholders
+- All TypeScript must compile — no `any` types, no type errors
+- Uses only Strong Tie Design System components — never builds custom UI from scratch when a design system primitive exists
+
+**Prototype repo:** `https://github.com/koutsouros/hyprlayer-prototypes`  
+**Local path (relative to PM repo):** `../hyprlayer-prototypes`
 
 ---
 
@@ -257,6 +288,40 @@ research_requirements
   └── @thoughts-locator    (check memory/ exists)
   └── @thoughts-analyzer   (read relevant memory files)
   └── @memory-updater      (apply confirmed operations)
+
+create_prototype
+  └── [reads prototype-config.md — product line registry]
+  └── [reads prototype-paths.local.md — resolves local repo path]
+  └── IF new product line:
+        @prototype-builder   INIT_PRODUCT_LINE
+          creates: hyprlayer-prototypes-{slug}/ at local path
+          writes:  prototype-paths.local.md entry
+          updates: prototype-config.md registry row
+  └── @thoughts-locator    (find spec, PRD, OA)
+  └── @thoughts-analyzer × up to 3 parallel
+        (spec, PRD, OA — extract flows, personas, constraints)
+  └── @prototype-builder   SCAFFOLD
+        writes: prototypes/{date}-{slug}/ in hyprlayer-prototypes-{product}
+        writes: thoughts/shared/prototypes/{date}-prototype-{slug}.md
+
+iterate_prototype
+  └── [reads PROTOTYPE.md + all existing screen files]
+  └── @thoughts-analyzer   (linked spec or PRD — checks scope alignment, surfaces unprototyped flows)
+  └── @prototype-builder   ADD_SCREEN and/or UPDATE_SCREEN + UPDATE_MANIFEST
+        (classifies each requested change internally — user does not choose operation)
+
+handoff_prototype
+  └── [reads PROTOTYPE.md from prototype repo]
+  └── @thoughts-analyzer × parallel
+        (decisions.md, taxonomy.md — check for duplicates)
+  └── @memory-updater      (LOG_DECISION, ADD_TERM — confirmed only)
+  └── @prototype-builder   UPDATE_MANIFEST (status → ready-for-handoff)
+
+export_prototype
+  └── [reads PROTOTYPE.md + scans src/ for component inventory]
+  └── @prototype-builder   BUILD_HANDOFF
+        writes: {prototype_path}/handoff/ (static build)
+        writes: {prototype_path}/HANDOFF.md
 ```
 
 ---
