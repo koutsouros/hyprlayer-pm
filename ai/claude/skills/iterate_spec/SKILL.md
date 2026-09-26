@@ -1,8 +1,9 @@
 ---
+name: iterate_spec
 description: Revise an existing feature spec based on engineering feedback or a stakeholder scope change — updates in place, captures the reason, and flags downstream impact
 ---
 
-# /iterate_spec
+# iterate_spec
 
 **Version:** v1.0
 **Purpose:** Update an existing feature spec when scope changes. Handles two triggers: (1) engineering feedback surfaced during planning — feasibility concerns, missing constraints, scope that's too broad; (2) stakeholder or PM decision to cut, add, or reframe scope before or during implementation. Always updates the spec in place, increments the version, captures the reason for the change in memory, and flags if an existing engineering plan may be affected.
@@ -64,7 +65,8 @@ Wait for **thoughts-locator** to complete before proceeding.
 
 Invoke the following **in parallel**:
 
-****thoughts-analyzer**** — Read the spec in full. Extract and return:
+\***\*thoughts-analyzer\*\*** — Read the spec in full. Extract and return:
+
 - The spec's current `version` and `status` from frontmatter
 - The full **In Scope** section
 - The full **Out of Scope** section
@@ -74,7 +76,8 @@ Invoke the following **in parallel**:
 - The full **Open Questions** section
 - Any `[TBD]` or `[ASSUMPTION]` flags still present in the body
 
-****thoughts-locator**** (second instance) — Check `thoughts/shared/backlog/backlog.md` for this spec's row. Return:
+\***\*thoughts-locator\*\*** (second instance) — Check `thoughts/shared/backlog/backlog.md` for this spec's row. Return:
+
 - The current backlog status (`Todo`, `In Progress`, `Done`, `Blocked`)
 - Whether an engineering plan link exists in the Eng Plan column
 
@@ -94,6 +97,7 @@ No flag needed — changes are low-risk.
 
 **If status is `Done`:**
 Ask the user to confirm before proceeding:
+
 > This spec is marked Done in the backlog — the feature has shipped. Are you iterating this spec to inform a follow-on version, or was the Done status set prematurely?
 
 Wait for confirmation before continuing.
@@ -128,9 +132,11 @@ Wait for the user to describe the changes. Do not guess or infer changes from th
 Based on the trigger type from step 1, ask one follow-up if not already clear:
 
 **Engineering feedback trigger:**
+
 > What was the specific concern engineering raised? (This becomes the rationale for the change — the more specific, the more useful it will be in the decision log.)
 
 **Scope decision trigger:**
+
 > Who made this call and what drove it? (Stakeholder name or team, and the reason — timeline pressure, new constraint, reprioritization, etc.)
 
 If the rationale is already clear from the user's opening response, skip this and proceed.
@@ -140,25 +146,30 @@ If the rationale is already clear from the user's opening response, skip this an
 Using the user's confirmed change description and rationale, draft the updated sections. Apply the following rules:
 
 **For scope reductions (cutting something):**
+
 - Move cut items from In Scope to Out of Scope with a brief rationale note in parentheses
 - Remove or update any Acceptance Criteria that tested the cut functionality
 - Add or update an Out of Scope entry: `{{item}} — cut: {{rationale}}`
 
 **For scope additions (adding something):**
+
 - Add to In Scope
 - Add corresponding Acceptance Criteria (Given/When/Then)
 - Flag any new Success Metrics needed: `[TBD: metric needed for new scope]`
 - If the addition is significant, flag whether a PRD update may be needed
 
 **For constraint additions (new hard limit):**
+
 - Add to Constraints section
 - Review Acceptance Criteria for any that now conflict with the constraint; flag them
 
 **For clarifications and rewrites (no scope change, just sharpening):**
+
 - Update the relevant section(s) only
 - Note in `last_updated_note`: "Clarification — no scope change"
 
 **For all changes:**
+
 - Update `status` to `draft` if it was previously `ready` and the change is substantive
 - If any `[TBD]` or `[ASSUMPTION]` flags are resolved by this iteration, remove them and note it
 
@@ -198,10 +209,10 @@ Wait for confirmation or edits. If the user requests adjustments, revise the pro
 Write the confirmed changes to the spec file in place. Update the following frontmatter fields:
 
 ```yaml
-status: {{draft if substantive change, otherwise unchanged}}
-version: {{incremented: v0.1 → v0.2, v1.0 → v1.1, etc.}}
-last_updated: {{YYYY-MM-DD today}}
-last_updated_by: {{author from thoughts status or user's name}}
+status: { { draft if substantive change, otherwise unchanged } }
+version: { { incremented: v0.1 → v0.2, v1.0 → v1.1, etc. } }
+last_updated: { { YYYY-MM-DD today } }
+last_updated_by: { { author from thoughts status or user's name } }
 last_updated_note: "{{one sentence: what changed and why}}"
 ```
 
@@ -214,6 +225,7 @@ Check whether `thoughts/shared/memory/decisions.md` exists via `**thoughts-locat
 **If decisions.md exists**, invoke `**memory-updater**`:
 
 **For every scope reduction (cut item):**
+
 ```
 Operation: LOG_DECISION
 decision: "Removed '{{item}}' from scope of {{spec name}}"
@@ -224,6 +236,7 @@ made_by: {{user name or stakeholder name if eng feedback}}
 ```
 
 **For every new hard constraint:**
+
 ```
 Operation: LOG_DECISION
 decision: "Added constraint to {{spec name}}: {{constraint}}"

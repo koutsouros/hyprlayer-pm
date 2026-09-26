@@ -1,8 +1,9 @@
 ---
+name: update_backlog
 description: Keep the product backlog current — sync the spec registry, update statuses, and manage parking lot ideas
 ---
 
-# /update_backlog
+# update_backlog
 
 **Version:** v1.1
 **Purpose:** Maintain the product backlog file at `thoughts/shared/backlog/backlog.md`. Run this any time you want to sync the registry against actual specs on disk, update a feature's status, add or clean up parking lot ideas, or do a full health check across the backlog. Delegates all file writes to `**backlog-creator**` and `**backlog-updater**`.
@@ -52,18 +53,22 @@ Invoke `**thoughts-locator**` to find `thoughts/shared/backlog/backlog.md`.
 
 **If backlog.md does NOT exist:**
 Ask the user:
+
 > "No backlog.md found for this product. Would you like me to create one? It will scan your existing specs/ and pre-populate the registry."
 
 If yes — invoke `**backlog-creator**`:
+
 ```
 Create a new backlog.md for product: {{product name from thoughts status or ask user}}
 ```
+
 Wait for it to complete, then present the result. End the command — creation is the only needed action.
 
 If no — stop.
 
 **If backlog.md DOES exist:**
 Invoke `**thoughts-analyzer**` to read `thoughts/shared/backlog/backlog.md` in full. Extract:
+
 - All current registry rows (feature name, status, spec path, eng plan path, created date, notes)
 - All parking lot entries per section (User Feedback, Internal Ideas, Research & Metrics, Competitive Signals)
 - The `last_updated` frontmatter date
@@ -112,11 +117,13 @@ Invoke `**backlog-updater**` with all confirmed operations. Pass each as a separ
 ### Operation reference
 
 **Sync registry against specs on disk:**
+
 ```
 Operation: FULL_SYNC
 ```
 
 **Update a feature's status:**
+
 ```
 Operation: UPDATE_STATUS
 spec_slug: {{slug from spec filename}}
@@ -125,6 +132,7 @@ notes: {{optional — blocker description, shipped version, etc.}}
 ```
 
 **Add a parking lot idea:**
+
 ```
 Operation: PARKING_LOT_ADD
 section: {{User Feedback | Internal Ideas | Research & Metrics | Competitive Signals}}
@@ -133,6 +141,7 @@ source_ref: {{optional path or reference}}
 ```
 
 **Remove or promote a parking lot entry:**
+
 ```
 Operation: PARKING_LOT_REMOVE
 section: {{section name}}
@@ -140,6 +149,7 @@ entry_text: {{partial text to identify the entry}}
 ```
 
 **Link an eng plan to a registry row:**
+
 ```
 Operation: ADD_PLAN_LINK
 spec_slug: {{slug from spec filename}}
@@ -178,6 +188,7 @@ After **backlog-updater** completes, present to the user:
 4. Any flags raised by the agent (e.g., spec files not found, rows that couldn't be matched)
 
 If a FULL_SYNC was run, also note:
+
 - How many specs were added to the registry
 - How many rows were flagged with missing spec files (and ask the user what to do with them — archive or delete)
 

@@ -1,8 +1,9 @@
 ---
+name: update_memory
 description: Update the product memory — log a decision, update product context, add a taxonomy term, amend an existing entry, or run a memory health check
 ---
 
-# /update_memory
+# update_memory
 
 **Version:** v1.0
 **Purpose:** Maintain the three memory files in `thoughts/shared/memory/` — the decision log (`decisions.md`), product context (`context.md`), and taxonomy (`taxonomy.md`). Run this any time a decision is made in conversation, the team's focus shifts, a new term is defined, or you want to check the health of accumulated memory. Delegates all file writes to `**memory-updater**`.
@@ -58,13 +59,16 @@ Invoke `**thoughts-locator**` to find `thoughts/shared/memory/` and determine wh
 
 **If the memory folder does not exist:**
 Ask the user:
+
 > "The memory/ folder hasn't been set up for this product yet. Would you like me to initialize it? This creates decisions.md, context.md, and taxonomy.md with empty templates — ready to populate."
 
 If yes — invoke `**memory-updater**`:
+
 ```
 Operation: INIT
 product: {{product name from thoughts status, or ask the user}}
 ```
+
 Wait for it to complete, then return to step 1 to capture what the user originally wanted to log.
 
 If no — stop.
@@ -115,12 +119,14 @@ Wait for the user's selection. For any candidate marked `[needs clarification]`,
 Based on the user's input and the current state of the relevant files, plan the operations needed.
 
 **Confirm before executing if any of the following are true:**
+
 - More than 3 operations are planned in a single run
 - An existing entry is being amended or removed (AMEND_DECISION, AMEND_TERM, REMOVE_TERM)
 - A context.md section is being fully replaced with substantially different content
 - A decision is being reversed (AMEND_DECISION with a `↩ Reversed:` row)
 
 **Confirmation format:**
+
 ```
 Here's what I'm going to write to memory:
 
@@ -142,6 +148,7 @@ Invoke `**memory-updater**` with all confirmed operations. Pass each as a clearl
 ### Operation reference
 
 **Log a decision:**
+
 ```
 Operation: LOG_DECISION
 decision: {{what was decided — one sentence, active voice}}
@@ -152,6 +159,7 @@ made_by: {{author or team — optional}}
 ```
 
 **Record a reversal or amendment:**
+
 ```
 Operation: AMEND_DECISION
 original_decision: {{partial text of the original decision to match}}
@@ -162,6 +170,7 @@ made_by: {{optional}}
 ```
 
 **Update product context:**
+
 ```
 Operation: UPDATE_CONTEXT
 sections:
@@ -174,6 +183,7 @@ author: {{who is updating}}
 ```
 
 **Add a new term:**
+
 ```
 Operation: ADD_TERM
 term: {{Term in Title Case}}
@@ -183,6 +193,7 @@ source: {{spec path, PRD path, or "conversation YYYY-MM-DD"}}
 ```
 
 **Amend an existing term:**
+
 ```
 Operation: AMEND_TERM
 term: {{term to update}}
@@ -192,6 +203,7 @@ source: {{what prompted the update}}
 ```
 
 **Remove a deprecated term:**
+
 ```
 Operation: REMOVE_TERM
 term: {{term to remove}}
@@ -199,6 +211,7 @@ reason: {{deprecated | renamed to: {{new term}} | absorbed into: {{other term}}}
 ```
 
 **Run health check (no writes):**
+
 ```
 Operation: CONSOLIDATE
 ```

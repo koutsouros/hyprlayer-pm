@@ -1,8 +1,9 @@
 ---
+name: export_prototype
 description: Build a static HTML export package and generate an annotated HANDOFF.md for engineering
 ---
 
-# Export Prototype
+# export_prototype
 
 **Version:** v1.0  
 **Purpose:** Run a production Vite build of a prototype, produce a self-contained static HTML package, and generate an annotated `HANDOFF.md` that engineering can use as a reference without running the project locally.
@@ -25,11 +26,12 @@ You are a senior front-end engineer preparing a prototype for engineering handof
 
 ## STEP 1 — CONFIRM PROTOTYPE STATE
 
-Ask the user: *"What is the prototype path?"* (e.g. `prototypes/bim-viewer/2026-06-17-model-upload`)
+Ask the user: _"What is the prototype path?"_ (e.g. `prototypes/bim-viewer/2026-06-17-model-upload`)
 
 Read `{prototype_repo_local_path}/{prototype_path}/PROTOTYPE.md`.
 
 Check:
+
 - Status is `ready-for-handoff` or `in-progress` (proceed either way, but flag if `in-progress`)
 - At least one screen exists in the Screens table with status `complete`
 
@@ -62,6 +64,7 @@ known_gaps:            {all items from PROTOTYPE.md Known Gaps section}
 ```
 
 `**prototype-builder**` will:
+
 - Run `pnpm build --outDir handoff` from the prototype directory
 - Verify `handoff/index.html` was produced
 - Write a draft `HANDOFF.md`
@@ -80,36 +83,45 @@ The final `HANDOFF.md` must include all of the following sections — do not omi
 ### Sections required
 
 **Header block**
+
 - Prototype title, date, path, linked spec/PRD/OA, static export location
 
 **Screens**
+
 - Table: Screen name | File | Purpose (one sentence)
 
 **Component Inventory**
+
 - Table: Component | Source | Design system docs link
 - Source is either `@/components/ui/{name}` (design system) or `src/components/{name}` (custom)
 - For custom components, note what design system primitives it composes
 
 **Mock Data Schema**
+
 - For each entity: file path, row count, TypeScript interface (inline code block)
-- Note: *"All data is mock. Replace with real API responses before production."*
+- Note: _"All data is mock. Replace with real API responses before production."_
 
 **State Management**
+
 - Which approach was used and why
 - If Zustand: each store file, what state it holds, what screens use it
 
 **Design Decisions**
+
 - Table of decisions from `PROTOTYPE.md` that were marked `captured: true` (already in memory)
 - Plus any remaining decisions not yet captured, flagged: `⚠️ Not yet captured to memory — run prototype_handoff`
 
 **Known Gaps**
+
 - Numbered list of interactions, edge cases, and content not prototyped
 - For each gap: a short note on what engineering should expect to design/implement
 
 **Running Locally**
+
 - Exact commands to clone, install, and run
 
 **Viewing the Static Export**
+
 - One-line instruction: open `handoff/index.html`
 
 ---

@@ -142,6 +142,38 @@ See [`documentation/artifact-hierarchy.md`](documentation/artifact-hierarchy.md)
 
 ---
 
+## Shared Templates
+
+Cross-product artifact templates live in `thoughts/global/shared/`. Every skill that produces a PM artifact reads the matching template from here at runtime — there is no inline template duplicated inside the skill itself.
+
+| Template | Used by | Artifact type |
+|----------|---------|---------------|
+| `oa-template.md` | `research_opportunity` | Opportunity Assessment |
+| `prd-template.md` | `research_requirements` | Product Requirements Doc |
+| `spec-template.md` | `create_spec` | Feature Spec |
+| `backlog-template.md` | `update_backlog` (on first create) | Backlog registry |
+
+### Unified Metadata Schema
+
+All PM artifacts share a consistent 10-field YAML frontmatter block:
+
+```yaml
+title: "..."
+type: research | plan | note
+date: YYYY-MM-DD
+status: draft | active | complete
+ticket: ""
+project: "product-slug"
+scope: shared
+tags: [...]
+author: "..."
+related: []
+```
+
+This schema is backend-portable — the same fields map to git/Obsidian frontmatter, Notion database properties, and Anytype type properties.
+
+---
+
 ## Storage Backends
 
 Hyprlayer-PM uses whatever storage backend Hyprlayer is configured with. Run `Hyprlayer storage info --json` inside a project to see the active backend.
@@ -174,10 +206,24 @@ From this point forward, the workflow is spec → backlog → plan → ship → 
 
 ## Supported AI Tools
 
-| Tool | Commands | Agents | Project context |
-|------|----------|--------|-----------------|
-| **GitHub Copilot** | `ai/copilot/prompts/*.prompt.md` | `ai/copilot/agents/*.agent.md` | — |
-| **OpenCode** | `ai/opencode/commands/*.md` | `ai/opencode/agents/*.md` | `AGENTS.md` |
-| **Claude Code** | `ai/claude/commands/*.md` | `ai/claude/agents/*.md` | `CLAUDE.md` |
+| Tool | Format | Location | Project context |
+|------|--------|----------|-----------------|
+| **GitHub Copilot** | `.prompt.md` / `.agent.md` | `ai/copilot/` | — |
+| **OpenCode** | `.md` commands + agents | `ai/opencode/` | `AGENTS.md` |
+| **Claude Code** | Plugin (`skills/` + `agents/`) | `ai/claude/` | `CLAUDE.md` |
 
-All three tool folders contain equivalent skills and agents. Copilot uses `@agent-name` syntax for subagent invocation; OpenCode uses the same `@agent-name` syntax; Claude Code references agents by name in bold (`**agent-name**`) and routes automatically based on agent descriptions.
+All three folders contain equivalent skills and agents.
+
+### Claude Code — Plugin Installation
+
+The `ai/claude/` folder is a self-contained Claude Code plugin (`ai/claude/.claude-plugin/plugin.json`). Install it locally with:
+
+```bash
+claude --plugin-dir ./ai/claude
+```
+
+Once installed, skills are namespaced under the plugin: `/hyprlayer-pm:create_spec`, `/hyprlayer-pm:research_opportunity`, etc. Agents load automatically.
+
+### Copilot & OpenCode — Manual Registration
+
+Copy prompt files to `~/.copilot/prompts/` and agent files to `~/.copilot/agents/` for Copilot. For OpenCode, copy to `~/.opencode/commands/` and `~/.opencode/agents/`.

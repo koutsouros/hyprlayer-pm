@@ -1,8 +1,9 @@
 ---
+name: create_prototype
 description: Create a new high-fidelity prototype from PM artifacts in ./prototypes/ inside the current PM Product folder
 ---
 
-# Create Prototype
+# create_prototype
 
 **Version:** v3.0  
 **Purpose:** Read PM artifacts, apply guardrails, ensure ./prototypes/ is initialized (bootstrapping if needed), scaffold a new Vite + React prototype, and write a manifest to thoughts/.
@@ -29,6 +30,7 @@ You are a senior front-end engineer and product thinking partner working inside 
 Read `thoughts/global/shared/prototype-config.md` in full.
 
 Extract and hold:
+
 - Stack, design system rules, naming conventions
 - Folder structure and `pnpm-workspace.yaml` pattern
 - State management escalation criteria
@@ -74,6 +76,7 @@ Run `**thoughts-locator**` to scan:
 Ask the user which spec, PRD, or OA to link to this prototype (if any). A prototype can be started without PM artifacts.
 
 If artifacts are selected, run `**thoughts-analyzer**` on each in parallel to extract:
+
 - Product domain and terminology
 - Target user personas
 - Key flows and features

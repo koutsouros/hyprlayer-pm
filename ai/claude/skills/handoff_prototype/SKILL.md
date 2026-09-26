@@ -1,8 +1,9 @@
 ---
+name: handoff_prototype
 description: Capture prototype design decisions to memory and mark the prototype ready for handoff
 ---
 
-# Handoff Prototype
+# handoff_prototype
 
 **Version:** v1.0  
 **Purpose:** Surface design decisions made during prototyping, selectively capture them to the product memory files, update the linked spec if one exists, and mark the prototype ready for engineering handoff.
@@ -26,11 +27,12 @@ You are a PM-layer agent connecting prototype work back to the product record. Y
 
 ## STEP 1 — READ PROTOTYPE STATE
 
-Ask the user: *"What is the prototype path?"* (e.g. `prototypes/bim-viewer/2026-06-17-model-upload`)
+Ask the user: _"What is the prototype path?"_ (e.g. `prototypes/bim-viewer/2026-06-17-model-upload`)
 
 Read `{prototype_repo_local_path}/{prototype_path}/PROTOTYPE.md` in full.
 
 Extract:
+
 - All rows from the Design Decisions table
 - All items in the Known Gaps section
 - Linked spec, PRD, OA paths
@@ -80,6 +82,7 @@ If there are no decisions logged, note it and ask:
 For each confirmed decision, delegate to `**memory-updater**`:
 
 **Decision log entry:**
+
 ```
 operation: LOG_DECISION
 decision:  {decision text}
@@ -87,6 +90,7 @@ rationale: {rationale — prefix with "Prototype: " to indicate origin}
 ```
 
 **Taxonomy entries** (for any new terms introduced):
+
 ```
 operation: ADD_TERM
 term:       {term}
@@ -113,6 +117,7 @@ follow-on work in the backlog?
 ```
 
 If the user confirms any gaps should update the spec:
+
 - Run `**thoughts-analyzer**` on the linked spec to read its current out-of-scope section
 - Delegate to the spec file update: append each confirmed gap to the spec's out-of-scope section with a note: `[From prototype: {yyyy-mm-dd}]`
 

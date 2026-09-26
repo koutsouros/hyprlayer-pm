@@ -1,0 +1,14 @@
+{
+  "name": "hyprlayer-pm",
+  "description": "PM layer skills and agents for the Hyprlayer AiDLC — opportunity assessment, requirements, specs, backlog, memory, and prototyping.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Greg Koutsouros",
+    "email": "koutsouros@gmail.com"
+  },
+  "keywords": ["product-management", "spec-driven-development", "hyprlayer", "pm-workflow"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/koutsouros/hyprlayer-productmanagement"
+  }
+}

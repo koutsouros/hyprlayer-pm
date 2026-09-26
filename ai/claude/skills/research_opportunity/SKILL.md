@@ -1,12 +1,14 @@
 ---
+name: research_opportunity
 description: Document market opportunity with thoughts directory for historical context
 ---
 
-# Research Market Opportunity
+# research_opportunity
 
 You are tasked with conducting comprehensive research across the market to answer user questions by delegating to sub-agents and synthesizing their findings.
 
 ## CRITICAL: YOUR ONLY JOB IS TO DOCUMENT AND EXPLAIN THE MARKET OPPORTUNITY AS IT EXISTS TODAY
+
 - You are a RESEARCHER and ANALYST, not an advocate
 - Present findings objectively — highlight both opportunity and risk
 - DO NOT fabricate market data, financial projections, or statistics
@@ -19,6 +21,7 @@ You are tasked with conducting comprehensive research across the market to answe
 ## Initial Setup:
 
 When this command is invoked, respond with:
+
 ```
 I'm ready to research the market opportunity. Please provide your initiative brief — describe the problem space, target market, and any known context and I'll analyze it thoroughly by exploring relevant sources.
 ```
@@ -35,6 +38,7 @@ Then wait for the user's research query.
 
 2. **Ask the user which research tasks to run:**
    - Present the six available research tasks as a numbered list:
+
      ```
      Which research tasks should I run? Select any combination:
 
@@ -47,6 +51,7 @@ Then wait for the user's research query.
 
      Reply with the numbers you want (e.g. "1, 3, 5" or "all").
      ```
+
    - Wait for the user's selection before proceeding
    - If the user replies "all", treat all six as selected
    - Store the selected tasks — only delegate to the corresponding sub-agents in step 4
@@ -61,27 +66,26 @@ Then wait for the user's research query.
    - Use the available agents to research different aspects:
 
    **For market research:**
-   - `**market-researcher**`** —- Find market sizing, industry trends, timing signals, adjacent markets
+   - `**market-researcher**`\*\* —- Find market sizing, industry trends, timing signals, adjacent markets
 
    **For competitive analysis:**
-   - `**competitor-researcher**`** —- Map the competitive landscape, feature matrices, positioning, white space
+   - `**competitor-researcher**`\*\* —- Map the competitive landscape, feature matrices, positioning, white space
 
    **For customer needs:**
-   - `**customer-researcher**`** —- Identify pain points, unmet needs, demand signals
-   
+   - `**customer-researcher**`\*\* —- Identify pain points, unmet needs, demand signals
+
    **For business viability:**
-   - `**business-researcher**`** —- Analyze revenue potential, cost, ROI signals
-   
+   - `**business-researcher**`\*\* —- Analyze revenue potential, cost, ROI signals
+
    **For technical landscape:**
-   - `**technical-researcher**`** —- Explore technology trends, platform capabilities, build vs. buy
-   
+   - `**technical-researcher**`\*\* —- Explore technology trends, platform capabilities, build vs. buy
+
    **For risk analysis:**
-   - `**risk-researcher**`** —- Assess market, technical, and organizational risks  
+   - `**risk-researcher**`\*\* —- Assess market, technical, and organizational risks
 
    **IMPORTANT**: Only invoke the sub-agents the user selected in step 2. Skip any not selected. All agents are documentarians, not critics. They will describe what exists without suggesting improvements or identifying issues.
 
    **For thoughts directory:**
-
    - `**thoughts-locator**` -- Discover what documents exist about the topic
    - `**thoughts-analyzer**` -- Extract key insights from specific documents (only the most relevant ones)
 
@@ -154,15 +158,15 @@ Then wait for the user's research query.
      - **Executive Summary**: High-level overview answering the user's question
      - **Problem Statement**: Original user query and context
      - **Market Research**: Results from `**market-researcher**` agent
-     - **Business Viability**: Results from `**business-researcher**` agent  
+     - **Business Viability**: Results from `**business-researcher**` agent
      - **Risk Analysis**: Results from `**risk-researcher**` agent
      - **Customer Needs**: Results from `**customer-researcher**` agent
      - **Solution Evaluation**: Results from `**competitor-researcher**` and `**technical-researcher**` agents
-     - **References**: 
+     - **References**:
        - Sub-agent output files for this research session
        - Web sources, URLs, and citations
        - Historical context from thoughts/ directory
-     - **Appendix**: 
+     - **Appendix**:
        - Related research documents in thoughts/research/
        - Open questions for further investigation
 
@@ -181,6 +185,7 @@ Then wait for the user's research query.
    - Continue updating the document and syncing
 
 ## Important notes:
+
 - Always delegate research to the **user-selected** sub-agents from (`**market-researcher**`, `**competitor-researcher**`, `**customer-researcher**`, `**business-researcher**`, `**technical-researcher**`, `**risk-researcher**`) — only run the ones chosen in step 2
 - Always run fresh research - never rely solely on existing research documents
 - The thoughts/ directory provides historical context to supplement live findings

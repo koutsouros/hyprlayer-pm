@@ -1,4 +1,5 @@
 ---
+name: create_spec
 description: Create a feature spec with thoughts directory for persistent product context
 ---
 
@@ -68,21 +69,24 @@ Wait for **thoughts-locator** to complete before proceeding to 2B.
 
 From the files **thoughts-locator** returned, identify the highest-value sources. Then invoke the following **in parallel**:
 
-****thoughts-analyzer**** — Read the PRD in full. Extract:
-  - The matching feature or phase from Appendix A (Phased Roadmap) if present
-  - The matching rows from the Functional Requirements table if present
-  - The relevant User Personas
-  - The product-level Success Metrics that this feature should roll up to
+\***\*thoughts-analyzer\*\*** — Read the PRD in full. Extract:
 
-****thoughts-analyzer**** (second instance) — Read any matching prior specs in `thoughts/shared/specs/`. Extract:
-  - Patterns used in acceptance criteria
-  - Scope decisions that should not be contradicted
-  - Related features this spec should link to
+- The matching feature or phase from Appendix A (Phased Roadmap) if present
+- The matching rows from the Functional Requirements table if present
+- The relevant User Personas
+- The product-level Success Metrics that this feature should roll up to
 
-****thoughts-analyzer**** (third instance, only if backlog or user-docs files were found) — Read the most relevant backlog items, backlog.md parking lot entries, and user documentation. Extract:
-  - User demand signals or reported pain points relevant to this feature
-  - The exact parking lot section name and entry text if a match is found (needed for PARKING_LOT_REMOVE in step 4)
-  - Existing user-facing behavior this feature changes or builds on (from user-docs)
+\***\*thoughts-analyzer\*\*** (second instance) — Read any matching prior specs in `thoughts/shared/specs/`. Extract:
+
+- Patterns used in acceptance criteria
+- Scope decisions that should not be contradicted
+- Related features this spec should link to
+
+\***\*thoughts-analyzer\*\*** (third instance, only if backlog or user-docs files were found) — Read the most relevant backlog items, backlog.md parking lot entries, and user documentation. Extract:
+
+- User demand signals or reported pain points relevant to this feature
+- The exact parking lot section name and entry text if a match is found (needed for PARKING_LOT_REMOVE in step 4)
+- Existing user-facing behavior this feature changes or builds on (from user-docs)
 
 **Important:** Only invoke agents for sources that **thoughts-locator** actually found. Do not invoke an agent to read a folder that returned no results.
 
@@ -91,11 +95,13 @@ Wait for all parallel agents to complete before proceeding to step 3.
 ### 2C — Branch: PRD feature vs. net-new
 
 **If the feature is from the PRD** (user said yes, or you found it in the PRD during research):
+
 - Note the PRD path and the feature's location within it
 - The spec will inherit scope and personas from the PRD — do not redefine them
 - Set `prd_aligned: true` in the spec's frontmatter
 
 **If the feature is net-new** (user said no, or it was not found in the PRD):
+
 - Note that this spec is not yet reflected in the PRD
 - Flag this in the spec body under Open Questions: "This feature is not in the current PRD. PM should assess whether it requires a PRD update before moving to implementation."
 - Set `prd_aligned: false` in the spec's frontmatter
@@ -107,6 +113,7 @@ Wait for all parallel agents to complete before proceeding to step 3.
 Using all gathered context, populate the spec template below. Follow the instructions inside each section precisely.
 
 ### Style rules
+
 - Write for an engineering audience — the spec is the primary input to `/create_plan`
 - Acceptance criteria must be testable: use Given/When/Then or equivalent phrasing
 - Success metrics must be measurable: include a baseline if one exists in prior research or metrics/
@@ -116,6 +123,7 @@ Using all gathered context, populate the spec template below. Follow the instruc
 - Flag all unvalidated assumptions with `[ASSUMPTION]`
 
 Before writing to thoughts, present the draft to the user and ask:
+
 > "Here's the draft spec. Does this accurately capture the scope and success criteria? Any changes before I write it to thoughts?"
 
 Wait for confirmation or edits. Apply any changes, then proceed to step 4.
@@ -124,105 +132,7 @@ Wait for confirmation or edits. Apply any changes, then proceed to step 4.
 
 ## SPEC TEMPLATE
 
-Fill in every placeholder. Remove placeholder syntax in the final output.
-
-```markdown
----
-title: "Spec: {{Feature Name}}"
-type: plan
-date: {{YYYY-MM-DD}}
-status: draft
-ticket: ""
-project: "{{product-slug}}"
-scope: shared
-tags: [spec]
-author: "{{author name from thoughts status}}"
-related: []
-prd: "{{path to PRD in thoughts, or none}}"
-prd_aligned: {{true | false}}
-source: "{{parking lot section and entry if promoted from backlog, or none}}"
-version: v0.1
----
-
-# Spec: {{Feature Name}}
-
-**Date:** {{YYYY-MM-DD}}
-**Status:** Draft
-**Author:** {{author}}
-**PRD:** {{link to PRD in thoughts, or "Not yet in PRD"}}
-**Related Specs:** {{links to related specs, or "none"}}
-
----
-
-## Problem
-
-{{One sentence. What user pain or product gap does this address?
-Do not describe the solution here. Focus on the problem.}}
-
----
-
-## User Story
-
-As a {{persona — link to PRD persona or global/shared/personas/ if defined}},
-I want to {{specific action or capability}},
-so that {{measurable or meaningful outcome for the user}}.
-
----
-
-## In Scope
-
-{{3–5 items. Verb-first: "Allow users to…", "Surface…", "Support…", "Enable…"}}
-
-- {{scope item}}
-
----
-
-## Out of Scope
-
-{{Explicit exclusions. Prevents scope creep in the implementation plan.}}
-
-- {{out-of-scope item}}
-
----
-
-## Acceptance Criteria
-
-{{Testable Given/When/Then statements. These become /create_plan success criteria.}}
-
-- **Given** {{condition}}, **when** {{action}}, **then** {{outcome}}.
-
----
-
-## Success Metrics
-
-{{1–2 measurable outcomes. Baseline if known. Rolls up to PRD metrics where possible.}}
-
-- **{{Metric name}}:** {{What it measures}}. Baseline: {{value or [TBD]}}. Target: {{goal}}.
-
----
-
-## Constraints
-
-{{Optional. Confirmed technical, legal, or platform constraints only.}}
-
----
-
-## Related Context
-
-- **Opportunity Assessment:** {{path in thoughts, or "none found"}}
-- **PRD:** {{path in thoughts, or "none found"}}
-- **Backlog item(s):** {{parking lot section and entry text if promoted, or "none"}}
-- **User documentation:** {{path to relevant user-docs file, or "none"}}
-- **Prior specs:** {{paths to related specs, or "none"}}
-
----
-
-## Open Questions
-
-{{Each with an owner. Omit section if none.}}
-
-- {{Question}} — Owner: {{name or team}}
-```
+The spec template lives at `thoughts/global/shared/spec-template.md`. Read that file to get the full template structure before drafting. Fill in every placeholder and remove all placeholder syntax in the final output.
 
 ---
 
@@ -240,6 +150,7 @@ Write the completed spec to the path from 4A.
 ### 4C — Update the PRD (if prd_aligned is true)
 
 If the feature was found in the PRD's Appendix A or Functional Requirements:
+
 - Open the PRD file
 - Add a link to the new spec next to the matching roadmap phase or requirement row: `→ Spec: thoughts/shared/specs/YYYY-MM-DD-spec-{slug}.md`
 - Save the updated PRD. Do not modify any other section.
@@ -249,14 +160,17 @@ If the feature was found in the PRD's Appendix A or Functional Requirements:
 Check whether `thoughts/shared/backlog/backlog.md` exists.
 
 **If backlog.md does NOT exist** — invoke `**backlog-creator**`:
+
 ```
 Create a new backlog.md for product: {{product name}}
 ```
+
 The agent will scan existing specs/ and write the full file. Wait for it to complete before proceeding.
 
 **If backlog.md DOES exist** — invoke `**backlog-updater**` with the following operations:
 
 **Always include ADD_ROW:**
+
 ```
 Operation: ADD_ROW
 feature_name: {{Feature Name}}
@@ -266,6 +180,7 @@ notes: {{if prd_aligned is false: "Not in PRD" | if promoted from parking lot: "
 ```
 
 **Also include PARKING_LOT_REMOVE if the feature came from the parking lot:**
+
 ```
 Operation: PARKING_LOT_REMOVE
 section: {{exact section name from step 2B findings}}
@@ -282,6 +197,7 @@ After backlog writes complete, check whether `thoughts/shared/memory/` exists vi
 Invoke `**memory-updater**` automatically — do not ask the user for confirmation. Extract operations directly from the spec you just wrote:
 
 **Always attempt:**
+
 - **LOG_DECISION** for each explicit Out of Scope item that has an implied or stated rationale (e.g., "Offline access — deferred to v2" → decision: "Scoped out offline access from CSV Export spec", rationale: "Deferred to v2", source: spec path)
 - **LOG_DECISION** if `prd_aligned: false` → decision: "{{Feature Name}} spec created outside of current PRD", rationale: "Feature not yet in PRD; PM to assess whether PRD update is needed", source: spec path
 - **ADD_TERM** for any domain-specific terms introduced or explicitly defined in the spec body that do not already exist in taxonomy.md. Read taxonomy.md (via **thoughts-analyzer**) first to avoid duplicates before invoking ADD_TERM.
@@ -297,6 +213,7 @@ Wait for **memory-updater** to complete (or skip if memory not present) before p
 ### 4F — Present findings to the user
 
 After all writes are complete, present:
+
 1. The spec file path
 2. A one-paragraph summary: what was scoped in, what was called out-of-scope, and what remains TBD
 3. Whether the PRD was updated with a spec link
@@ -312,6 +229,7 @@ Ask if the user has any follow-up edits or wants to start implementation.
 ## STEP 5 — HANDLE FOLLOW-UP EDITS
 
 If the user requests changes after the spec is written:
+
 - Update the spec file in place
 - Increment the version in frontmatter (v0.1 → v0.2, etc.)
 - Add `last_updated`, `last_updated_by`, and `last_updated_note` to frontmatter
@@ -323,6 +241,7 @@ If the user requests changes after the spec is written:
 ## IMPORTANT NOTES
 
 **Path handling:** The `thoughts/searchable/` directory contains hard links for searching.
+
 - Strip ONLY "searchable/" — preserve all other subdirectories
 - `thoughts/searchable/shared/specs/my-spec.md` → `thoughts/shared/specs/my-spec.md`
 - NEVER change personal directories (e.g., `greg/`) to `shared/` or vice versa

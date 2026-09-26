@@ -1,8 +1,9 @@
 ---
+name: iterate_prototype
 description: Evolve an existing prototype — add new screens, extend existing ones, or both in a single guided session
 ---
 
-# Iterate Prototype
+# iterate_prototype
 
 **Version:** v1.0  
 **Purpose:** Read the current state of an existing prototype, show the user what exists, understand what they want to add or change, determine the right operations, and walk through each change with a confirmation plan before writing anything.
@@ -31,9 +32,10 @@ Run in parallel:
 
 **A.** Read `thoughts/global/shared/prototype-config.md` — confirm design system rules, naming conventions, state management criteria.
 
-**B.** Ask the user: *"What is the prototype path?"* (e.g. `prototypes/bim-viewer/2026-06-17-model-upload`)
+**B.** Ask the user: _"What is the prototype path?"_ (e.g. `prototypes/bim-viewer/2026-06-17-model-upload`)
 
 Then read `{prototype_repo_local_path}/{prototype_path}/PROTOTYPE.md` in full. Extract:
+
 - All existing screens (name, file, status, notes)
 - All mock data entities already defined
 - Current state management approach (context or Zustand)
@@ -69,6 +71,7 @@ If status is `ready-for-handoff` or `HANDOFF.md` exists, flag it now:
 > "⚠️ A handoff package has already been generated. Any changes here will require re-running `export_prototype` afterward."
 
 In parallel, if PM artifacts are linked, run `**thoughts-analyzer**` on the most relevant one (spec preferred, then PRD) to extract:
+
 - User flows and acceptance criteria not yet prototyped
 - Functional requirements that could inform what to build next
 - Domain terminology from `taxonomy.md`
@@ -93,11 +96,11 @@ If the user's request references something from the linked spec or PM artifacts 
 
 For each thing the user wants to add or change, classify it:
 
-| Type | Criteria |
-|------|----------|
-| **NEW SCREEN** | The requested content doesn't belong in any existing screen — it represents a distinct view, flow, or context the user navigates to |
+| Type             | Criteria                                                                                                                                      |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| **NEW SCREEN**   | The requested content doesn't belong in any existing screen — it represents a distinct view, flow, or context the user navigates to           |
 | **MODIFICATION** | The requested content extends or changes something within an existing screen — new section, wired interaction, layout change, additional data |
-| **BOTH** | A new screen plus changes to an existing one (e.g. "add a detail screen and wire the table rows to navigate to it") |
+| **BOTH**         | A new screen plus changes to an existing one (e.g. "add a detail screen and wire the table rows to navigate to it")                           |
 
 Then build a unified iteration plan and show it for confirmation:
 

@@ -1,8 +1,9 @@
 ---
+name: research_requirements
 description: Document requirements with thoughts directory for historical context
 ---
 
-# PRD Builder Prompt
+# research_requirements
 
 **Version:** v1.0
 **Purpose:** Research and generate a complete Product Requirements Document following the standard PRD template.
@@ -99,7 +100,7 @@ Fill in every `{{placeholder}}` and `{placeholder}` below. Remove placeholder sy
 ---
 title: "PRD: {{Title}}"
 type: research
-date: {{YYYY-MM-DD}}
+date: { { YYYY-MM-DD } }
 status: draft
 ticket: ""
 project: "{{product-slug}}"
