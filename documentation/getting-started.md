@@ -10,9 +10,9 @@ The PM layer runs on top of HyprLayer. Before using any PM commands, you need:
 
 - HyprLayer installed and configured (`hyprlayer storage info` should return a valid backend)
 - A `thoughts/` directory mapped to your storage backend (git or Obsidian)
-- GitHub Copilot (or compatible) with access to the prompt and agent files in `ai/copilot/`
+- Claude Code with the `hyprlayer-pm` plugin installed (see `CLAUDE.md` for marketplace install steps), or Copilot/OpenCode with files copied from `ai/other-providers/`
 
-If you're not sure whether HyprLayer is set up, run `hyprlayer storage info --json` in your terminal. If it returns a backend name, you're good. If it fails, follow the HyprLayer setup guide first.
+If you're not sure whether Hyprlayer is set up, run `hyprlayer storage info --json` in your terminal. If it returns a backend name, you're good. If it fails, follow the Hyprlayer setup guide first.
 
 ---
 

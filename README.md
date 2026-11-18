@@ -65,6 +65,19 @@ From Step 5 onward, the loop runs per feature until the product ships. Prototypi
 
 For command details and usage examples, see [`documentation/`](documentation/).
 
+### Slash Commands
+
+Six slash commands chain or wrap the skills above for common workflows. Available after plugin install as `/hyprlayer-pm:<command>`.
+
+| Command | Chains | What it does |
+|---------|--------|-------------|
+| `/discover <idea>` | `research_opportunity` | Full opportunity assessment — 6 researcher agents in parallel, synthesized into an OA |
+| `/define` | `research_requirements` | PRD from an existing OA — personas, phased roadmap, functional requirements, success metrics |
+| `/spec <feature>` | `create_spec` | Feature spec with AC, backlog registration, and automatic memory capture |
+| `/prototype` | `create_prototype` | Vite + React prototype scaffolded from PM artifacts |
+| `/memory` | `update_memory` | Log a decision, update context, add a term, or run a memory health check |
+| `/kickoff <idea>` | `research_opportunity` → `research_requirements` → `update_memory` | End-to-end: OA → PRD → memory initialization in one chained session with confirmation pauses |
+
 ---
 
 ## Agents
@@ -206,24 +219,41 @@ From this point forward, the workflow is spec → backlog → plan → ship → 
 
 ## Supported AI Tools
 
+**Claude Code and Cowork are the primary tools.** The plugin lives at `hyprlayer-pm/` at the repo root; this repo is also a Claude Code plugin marketplace.
+
 | Tool | Format | Location | Project context |
 |------|--------|----------|-----------------|
-| **GitHub Copilot** | `.prompt.md` / `.agent.md` | `ai/copilot/` | — |
-| **OpenCode** | `.md` commands + agents | `ai/opencode/` | `AGENTS.md` |
-| **Claude Code** | Plugin (`skills/` + `agents/`) | `ai/claude/` | `CLAUDE.md` |
+| **Claude Code** | Plugin (`skills/` + `agents/` + `commands/`) | `hyprlayer-pm/` | `CLAUDE.md` |
+| **Cowork** | Same plugin via marketplace | `hyprlayer-pm/` | `CLAUDE.md` |
+| **GitHub Copilot** | `.prompt.md` / `.agent.md` | `ai/other-providers/copilot/` | Copy instructions in `ai/other-providers/README.md` |
+| **OpenCode** | `.md` commands + agents | `ai/other-providers/opencode/` | Copy instructions in `ai/other-providers/README.md` |
 
-All three folders contain equivalent skills and agents.
+### Claude Code — Marketplace Install
 
-### Claude Code — Plugin Installation
-
-The `ai/claude/` folder is a self-contained Claude Code plugin (`ai/claude/.claude-plugin/plugin.json`). Install it locally with:
+This repo is a Claude Code plugin marketplace. The catalog lives at `.claude-plugin/marketplace.json`.
 
 ```bash
-claude --plugin-dir ./ai/claude
+# Add this repo as a marketplace (run once)
+claude plugin marketplace add ./
+
+# Install the plugin
+claude plugin install hyprlayer-pm@hyprlayer-pm
 ```
 
-Once installed, skills are namespaced under the plugin: `/hyprlayer-pm:create_spec`, `/hyprlayer-pm:research_opportunity`, etc. Agents load automatically.
+Once installed, skills invoke as `/hyprlayer-pm:skill-name` and slash commands as `/hyprlayer-pm:discover`, `/hyprlayer-pm:spec`, etc. Agents load automatically.
 
-### Copilot & OpenCode — Manual Registration
+### Cowork — Marketplace Install
 
-Copy prompt files to `~/.copilot/prompts/` and agent files to `~/.copilot/agents/` for Copilot. For OpenCode, copy to `~/.opencode/commands/` and `~/.opencode/agents/`.
+1. Open **Customize** → **Browse plugins** → **Personal** → **+**
+2. Select **Add marketplace from GitHub**
+3. Enter: `koutsouros/hyprlayer-pm`
+
+### Local development
+
+```bash
+claude --plugin-dir ./hyprlayer-pm
+```
+
+### Copilot & OpenCode — Manual Sync
+
+Skill files in `ai/other-providers/` can be copied manually. See `ai/other-providers/README.md` for copy instructions and a sync table showing all 10 skills across providers.

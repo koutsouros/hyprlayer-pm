@@ -1,0 +1,16 @@
+{
+  "name": "hyprlayer-pm",
+  "version": "1.0.0",
+  "description": "PM layer skills, agents, and commands for the Hyprlayer AiDLC — from opportunity assessment through spec, prototype, and handoff.",
+  "owner": {
+    "name": "Greg Koutsouros",
+    "email": "koutsouros@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "hyprlayer-pm",
+      "source": "./hyprlayer-pm",
+      "description": "PM workflow skills and agents — opportunity assessment, requirements, specs, backlog, memory, and prototyping"
+    }
+  ]
+}

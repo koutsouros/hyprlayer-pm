@@ -9,6 +9,6 @@
   "keywords": ["product-management", "spec-driven-development", "hyprlayer", "pm-workflow"],
   "repository": {
     "type": "git",
-    "url": "https://github.com/koutsouros/hyprlayer-productmanagement"
+    "url": "https://github.com/koutsouros/hyprlayer-pm"
   }
 }

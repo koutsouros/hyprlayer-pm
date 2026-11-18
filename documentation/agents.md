@@ -27,7 +27,7 @@ All researcher agents share the same operating principles: no fabricated data, a
 
 ### `@market-researcher`
 
-**File:** `ai/copilot/agents/market-researcher.agent.md`  
+**File:** `ai/other-providers/copilot/agents/market-researcher.agent.md`  
 **Called by:** `research_opportunity` (task 1 — Market Research)  
 **Storage support:** web, search
 
@@ -39,7 +39,7 @@ Sizes the market and maps industry dynamics. Produces TAM/SAM/SOM estimates with
 
 ### `@competitor-researcher`
 
-**File:** `ai/copilot/agents/competitor-researcher.agent.md`  
+**File:** `ai/other-providers/copilot/agents/competitor-researcher.agent.md`  
 **Called by:** `research_opportunity` (task 2 — Competitive Analysis)  
 **Storage support:** web, search
 
@@ -51,7 +51,7 @@ Maps the competitive landscape. Produces profiles for direct competitors, indire
 
 ### `@customer-researcher`
 
-**File:** `ai/copilot/agents/customer-researcher.agent.md`  
+**File:** `ai/other-providers/copilot/agents/customer-researcher.agent.md`  
 **Called by:** `research_opportunity` (task 3 — Customer Needs)  
 **Storage support:** web, search
 
@@ -63,7 +63,7 @@ Researches customer pain points, unmet needs, and demand signals. Documents how 
 
 ### `@business-researcher`
 
-**File:** `ai/copilot/agents/business-researcher.agent.md`  
+**File:** `ai/other-providers/copilot/agents/business-researcher.agent.md`  
 **Called by:** `research_opportunity` (task 4 — Business Viability)  
 **Storage support:** web, search
 
@@ -75,7 +75,7 @@ Assesses business viability and strategic fit. Analyzes revenue model options, c
 
 ### `@technical-researcher`
 
-**File:** `ai/copilot/agents/technical-researcher.agent.md`  
+**File:** `ai/other-providers/copilot/agents/technical-researcher.agent.md`  
 **Called by:** `research_opportunity` (task 5 — Technical Landscape)  
 **Storage support:** web, search
 
@@ -87,7 +87,7 @@ Maps the technology landscape. Produces build-vs-buy analysis, technology trend 
 
 ### `@risk-researcher`
 
-**File:** `ai/copilot/agents/risk-researcher.agent.md`  
+**File:** `ai/other-providers/copilot/agents/risk-researcher.agent.md`  
 **Called by:** `research_opportunity` (task 6 — Risk Analysis)  
 **Storage support:** web, search
 
@@ -99,7 +99,7 @@ Identifies and assesses risks across five dimensions: market, technical, organiz
 
 ## `@prototype-builder`
 
-**File:** `ai/copilot/agents/prototype-builder.agent.md`  
+**File:** `ai/other-providers/copilot/agents/prototype-builder.agent.md`  
 **Called by:** `create_prototype`, `iterate_prototype`, `handoff_prototype`, `export_prototype`  
 **Storage support:** filesystem (hyprlayer-prototypes monorepo)
 
@@ -130,7 +130,7 @@ Handles all file writes to the hyprlayer-prototypes monorepo. Never invoked dire
 
 ## `@backlog-creator`
 
-**File:** `ai/copilot/agents/backlog-creator.agent.md`  
+**File:** `ai/other-providers/copilot/agents/backlog-creator.agent.md`  
 **Called by:** `/create_spec` (when no backlog exists), `/update_backlog`  
 **Storage support:** git, Obsidian
 
@@ -148,7 +148,7 @@ Creates `backlog.md` from scratch for a product. Scans `thoughts/searchable/shar
 
 ## `@backlog-updater`
 
-**File:** `ai/copilot/agents/backlog-updater.agent.md`  
+**File:** `ai/other-providers/copilot/agents/backlog-updater.agent.md`  
 **Called by:** `/create_spec`, `/update_backlog`  
 **Storage support:** git, Obsidian
 
@@ -177,7 +177,7 @@ Applies surgical, typed updates to an existing `backlog.md`. Reads the full file
 
 ## `@memory-updater`
 
-**File:** `ai/copilot/agents/memory-updater.agent.md`  
+**File:** `ai/other-providers/copilot/agents/memory-updater.agent.md`  
 **Called by:** `/create_spec` (automatic), `/update_backlog` Done transitions (automatic), `/update_memory`  
 **Storage support:** git, Obsidian
 
