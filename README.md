@@ -35,42 +35,41 @@ Prototyping runs in parallel with the spec phase. A prototype is grounded in the
 
 1. **Discover** (`research_opportunity`) — Synthesize market signals, competitive landscape, and customer evidence into an Opportunity Assessment
 2. **Define** (`research_requirements`) — Translate the opportunity into a full PRD: personas, phased roadmap, functional requirements, success metrics
-3. **Spec** (`/create_spec`) — Scope a single feature into a testable, engineering-ready spec with explicit AC and out-of-scope decisions
+3. **Spec** (`create_spec`) — Scope a single feature into a testable, engineering-ready spec with explicit AC and out-of-scope decisions
 4. **Prototype** (`create_prototype` → `iterate_prototype`) — Build a high-fidelity prototype grounded in the spec; runs in parallel with spec refinement, not sequentially after it
-5. **Maintain** (`/update_backlog`) — Track all specs through the registry from Todo → In Progress → Done; manage pre-spec ideas in the parking lot
-6. **Iterate** (`/iterate_spec`) — Revise a spec when engineering raises a concern or scope changes; updates in place and logs the reason
-7. **Capture** (`/update_memory`) — Log decisions, refresh product context, define terminology — or let routine commands handle it automatically
+5. **Maintain** (`update_backlog`) — Track all specs through the registry from Todo → In Progress → Done; manage pre-spec ideas in the parking lot
+6. **Iterate** (`iterate_spec`) — Revise a spec when engineering raises a concern or scope changes; updates in place and logs the reason
+7. **Capture** (`update_memory`) — Log decisions, refresh product context, define terminology — or let routine commands handle it automatically
 
 From Step 5 onward, the loop runs per feature until the product ships. Prototyping is optional but recommended before engineering handoff for complex UI flows.
 
 ---
 
+## Skills
+
+Skills are the core PM workflows. Claude auto-loads a skill when the topic matches. Invoke directly with `/hyprlayer-pm:skill-name`.
+
+| Skill | What it does |
+|-------|-------------|
+| `research_opportunity` | Produce an Opportunity Assessment from parallel market, competitive, and customer research |
+| `research_requirements` | Produce a PRD covering personas, roadmap phases, functional requirements, and success metrics |
+| `create_spec` | Write a feature-scoped spec that engineering can act on immediately — confirms draft before writing |
+| `update_backlog` | Sync the spec registry, update statuses, and manage parking lot ideas |
+| `iterate_spec` | Revise an existing spec in place; flags if a plan exists and may go stale |
+| `update_memory` | Log decisions, update product context, add terminology, or run a memory health check |
+| `create_prototype` | Create a new Vite + React prototype from PM artifacts — bootstraps the product-line repo on first use |
+| `iterate_prototype` | Add new screens, extend existing ones, or do both in a single guided session |
+| `handoff_prototype` | Capture prototype design decisions to memory; mark prototype ready for engineering |
+| `export_prototype` | Build a static HTML export package and generate an annotated `HANDOFF.md` for engineering |
+
+For skill details and usage examples, see [`documentation/`](documentation/).
+
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `/research_opportunity` | Produce an Opportunity Assessment from parallel market, competitive, and customer research |
-| `/research_requirements` | Produce a PRD covering personas, roadmap phases, functional requirements, and success metrics |
-| `/create_spec` | Write a feature-scoped spec that engineering can act on immediately — confirms draft before writing |
-| `/update_backlog` | Sync the spec registry, update statuses, and manage parking lot ideas |
-| `/iterate_spec` | Revise an existing spec in place; flags if a plan exists and may go stale |
-| `/update_memory` | Log decisions, update product context, add terminology, or run a memory health check |
-| `/plan_sprint` | *(planned)* Scope a sprint from the backlog against team capacity |
-| `/review_metrics` | *(planned)* Post-launch metrics review tied to a spec's success criteria |
-| `/stakeholder_update` | *(planned)* Generate a status update for leadership or engineering |
-| `create_prototype` | Create a new Vite + React prototype from PM artifacts — bootstraps the product-line repo automatically on first use |
-| `/iterate_prototype` | Add new screens, extend existing ones, or do both — reads existing prototype state and classifies each change automatically |
-| `/handoff_prototype` | Capture prototype design decisions to memory; mark prototype ready for engineering |
-| `/export_prototype` | Build a static HTML export package and generate an annotated `HANDOFF.md` for engineering |
+Commands are user-triggered workflows that chain one or more skills. Available after plugin install as `/hyprlayer-pm:<command>`.
 
-For command details and usage examples, see [`documentation/`](documentation/).
-
-### Slash Commands
-
-Six slash commands chain or wrap the skills above for common workflows. Available after plugin install as `/hyprlayer-pm:<command>`.
-
-| Command | Chains | What it does |
-|---------|--------|-------------|
+| Command | Skills chained | What it does |
+|---------|---------------|-------------|
 | `/discover <idea>` | `research_opportunity` | Full opportunity assessment — 6 researcher agents in parallel, synthesized into an OA |
 | `/define` | `research_requirements` | PRD from an existing OA — personas, phased roadmap, functional requirements, success metrics |
 | `/spec <feature>` | `create_spec` | Feature spec with AC, backlog registration, and automatic memory capture |
